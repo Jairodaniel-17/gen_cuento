@@ -1,0 +1,24 @@
+[project]
+name = "gen-cuento"
+version = "0.1.0"
+description = "Generador de cuentos"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=0.3.15",
+    "langchain-openai>=0.3.2",
+    "loguru>=0.7.3",
+    "openai>=1.60.1",
+    "pydantic>=2.10.6",
+    "python-docx>=1.1.2",
+    "requests>=2.32.3",
+    "pillow>=9.0.0",
+    "langchain-community>=0.3.15",
+    "opencv-python>=4.11.0.86",
+]
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+[tool.uv.sources]
+pillow = [{ index = "pytorch-cu124" }]
