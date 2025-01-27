@@ -45,7 +45,7 @@ Este proyecto permite generar cuentos cortos acompañados de imágenes generadas
 Ejecutar el generador principal:
 
    ```bash
-   uv run main.py
+   uv run streamlit run main.py
    ```
 
 ## Estructura del Proyecto
