@@ -10,9 +10,6 @@ wheels/
 .venv
 .ruff_cache/
 .env
-<<<<<<< HEAD
-=======
 imagenes_generadas/
 stable_diffusion.log
 docs/
->>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d

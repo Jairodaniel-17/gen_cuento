@@ -7,11 +7,8 @@ Este proyecto permite generar cuentos cortos acompañados de imágenes generadas
 - Python 3.10+
 - CUDA (opcional, para aceleración GPU, para un procesado más rápido en las imágenes)
 - Dependencias listadas en `pyproject.toml`
-<<<<<<< HEAD
-=======
 - Stable Diffusion Automatic1111 activado para consumir mediante API `--api` y tener descargado el modelo lametta_v2012.safetensors
 - Modelo de generación de imagen: [Lametta_v2012.safetensors](https://civitai.com/models/158643/lametta)
->>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
 
 ## Instalación
 
@@ -33,11 +30,7 @@ Este proyecto permite generar cuentos cortos acompañados de imágenes generadas
    ```bash
    - Windows: `uv sync`
    - Linux/MacOS: `uv sync`
-<<<<<<< HEAD
-
-=======
    ```
->>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
 
 4. Cambiar el nombre de archivo `example.env` a `.env`:
 
