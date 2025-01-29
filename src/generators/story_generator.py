@@ -1,9 +1,21 @@
+<<<<<<< HEAD
 from langchain_openai import ChatOpenAI
 from docx import Document
 from docx.shared import Cm
 from config import LLM_API_KEY, LLM_API_MODEL, LLM_API_URL
 from image_generator import ImageGenerator
 import time
+=======
+import os
+from langchain_openai import ChatOpenAI
+from docx import Document
+from docx.shared import Cm
+import time
+from src.generators.image_generator import ImageGenerator
+from src.utils.config import LLM_API_KEY, LLM_API_MODEL, LLM_API_URL
+from loguru import logger
+
+>>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
 
 
 class StoryGenerator:
@@ -12,6 +24,12 @@ class StoryGenerator:
             api_key=LLM_API_KEY, base_url=LLM_API_URL, model=LLM_API_MODEL
         )
         self.image_generator = ImageGenerator()
+<<<<<<< HEAD
+=======
+        self.docs = "docs"
+        if not os.path.exists(self.docs):
+            os.makedirs(self.docs)
+>>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
 
     def generate_story(self, theme: str, characters: dict, plot: str) -> str:
         """Genera una historia creativa usando OpenAI basada en los parámetros de entrada."""
@@ -41,7 +59,11 @@ class StoryGenerator:
             images = self.image_generator.generate_images([payload])
             return images[0]  # Retorna la ruta de la imagen generada
         except Exception as e:
+<<<<<<< HEAD
             print(f"Error generating image: {e}")
+=======
+            logger.error(f"Error generating image: {e}")
+>>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
             return None
 
     def save_to_word(
@@ -54,7 +76,11 @@ class StoryGenerator:
         paragraphs = [p.strip() for p in story.split("\n") if p.strip()]
 
         if len(paragraphs) != len(images):
+<<<<<<< HEAD
             print("Warning: The number of paragraphs and images do not match.")
+=======
+            logger.warning("Warning: The number of paragraphs and images do not match.")
+>>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
 
         for idx, paragraph in enumerate(paragraphs):
             # Añade el párrafo al documento y justificar el texto
@@ -71,9 +97,15 @@ class StoryGenerator:
 
         try:
             doc.save(output_file)
+<<<<<<< HEAD
             print(f"Story successfully saved to {output_file}")
         except Exception as e:
             print(f"Failed to save the Word document: {e}")
+=======
+            logger.info(f"Story successfully saved to {output_file}")
+        except Exception as e:
+            logger.error(f"Failed to save the Word document: {e}")
+>>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
 
     def generate_image_descriptions(self, paragraphs, characters: dict) -> list[str]:
         descriptions = []
@@ -94,13 +126,18 @@ class StoryGenerator:
                 response = self.llm.invoke(instruction)
                 descriptions.append(response.content.strip())
             except Exception as e:
+<<<<<<< HEAD
                 print(
+=======
+                logger.error(
+>>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
                     f"Error generating description for paragraph: {paragraph[:50]}... Error: {e}"
                 )
                 descriptions.append(None)
 
         return descriptions
 
+<<<<<<< HEAD
     def run(self, theme: str, characters: dict, plot: str):
         # Paso 1: Generar la historia
         print("Generating story...")
@@ -122,3 +159,44 @@ class StoryGenerator:
         timefinish = time.strftime("%Y-%m-%d_%H-%M-%S")
         self.save_to_word(story, images, output_file=f"story_{theme}_{timefinish}.docx")
         print("Process completed.")
+=======
+    def run(self, theme: str, characters: dict, plot: str) -> str:
+        try:
+            # Paso 1: Generar la historia
+            logger.info("Generating story...")
+            story = self.generate_story(theme, characters, plot)
+            logger.info("Story generated successfully.")
+        except Exception as e:
+            logger.error(f"Error generating story: {e}")
+            return None
+
+        try:
+            # Paso 2: Generar descripciones de imágenes
+            logger.info("Generating image descriptions...")
+            paragraphs = [p.strip() for p in story.split("\n") if p.strip()]
+            image_descriptions = self.generate_image_descriptions(paragraphs, characters)
+        except Exception as e:
+            logger.error(f"Error generating image descriptions: {e}")
+            return None
+
+        try:
+            # Paso 3: Generar las imágenes
+            logger.info("Generating images...")
+            images = [self.generate_image(desc) for desc in image_descriptions if desc]
+            logger.info("Images generated successfully.")
+        except Exception as e:
+            logger.error(f"Error generating images: {e}")
+            return None
+
+        try:
+            # Paso 4: Guardar en el documento Word
+            logger.info("Saving to Word document...")
+            timefinish = time.strftime("%Y-%m-%d_%H-%M-%S")
+            path = f"{self.docs}/story_{theme}_{timefinish}.docx"
+            self.save_to_word(story, images, output_file=f"{path}")
+            logger.info("Process completed.")
+            return path
+        except Exception as e:
+            logger.error(f"Error saving to Word document: {e}")
+            return None
+>>>>>>> e17cb796e1b2bb9e2cb8a833397249661a93835d
